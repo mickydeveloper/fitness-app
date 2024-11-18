@@ -1,11 +1,17 @@
 import { useState } from "react";
-import { AppWrapper } from "./AppStyles";
+import { AppWrapper, ModeButtonWrapper } from "./AppStyles";
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import { NewData, DailyGoalsData } from "./mock/Data";
 import { LineChart } from "./components/charts/LineChart";
 import { Card } from "./components/common/Card";
 import GoalsCheckList from "./components/list/GoalsCheckList";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyles } from "./components/globalStyles";
+import { lightTheme, darkTheme } from "./components/Themes";
+import { QuickActionsButtons } from "./components/quickactions/QuickActionButtons";
+import { ToggleWrapper } from "./components/common/Toggle";
+import { CenterWrapper } from "./components/list/Goal/GoalStyles";
 
 Chart.register(CategoryScale);
 
@@ -25,14 +31,26 @@ function App() {
     ],
   });
   const [goalsData, setGoalsData] = useState(DailyGoalsData);
+  const [theme, setTheme] = useState("light");
+  const themeToggler = () => {
+    theme === "light" ? setTheme("dark") : setTheme("light");
+  };
 
   return (
-    <AppWrapper>
-      <Card>
-        <LineChart chartData={chartData} />
-      </Card>
-      <GoalsCheckList goalsData={goalsData} />
-    </AppWrapper>
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      <GlobalStyles />
+      <AppWrapper>
+        <Card>
+          <LineChart chartData={chartData} />
+        </Card>
+        <GoalsCheckList goalsData={goalsData} />
+        <QuickActionsButtons />
+        <ModeButtonWrapper>
+          Dark Mode
+          <ToggleWrapper type="checkbox" onClick={themeToggler} />
+        </ModeButtonWrapper>
+      </AppWrapper>
+    </ThemeProvider>
   );
 }
 

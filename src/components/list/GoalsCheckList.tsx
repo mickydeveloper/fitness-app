@@ -11,7 +11,12 @@ function GoalsCheckList({ goalsData }: { goalsData: Array<Goal> }) {
       return <GoalLine goal={data} />;
     });
   };
-  return <Card>{renderGoals()}</Card>;
+  return (
+    <Card>
+      <h2 style={{ textAlign: "center" }}>Daily Goals</h2>
+      {renderGoals()}
+    </Card>
+  );
 }
 
 export default GoalsCheckList;
