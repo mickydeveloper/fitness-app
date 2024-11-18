@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import { AppWrapper } from "./AppStyles";
+import Chart from "chart.js/auto";
+import { CategoryScale } from "chart.js";
+import { NewData, DailyGoalsData } from "./mock/Data";
+import { LineChart } from "./components/charts/LineChart";
+import { Card } from "./components/common/Card";
+import GoalsCheckList from "./components/list/GoalsCheckList";
+
+Chart.register(CategoryScale);
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [chartData, setChartData] = useState({
+    labels: NewData.map((data) => data.day),
+    datasets: [
+      {
+        data: NewData.map((data) => data.kmRun),
+        borderColor: "#36A2EB",
+        backgroundColor: "#9BD0F5",
+        fill: true,
+        borderWidth: 1,
+        lineTension: 0.4,
+        pointRadius: 0,
+      },
+    ],
+  });
+  const [goalsData, setGoalsData] = useState(DailyGoalsData);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <AppWrapper>
+      <Card>
+        <LineChart chartData={chartData} />
+      </Card>
+      <GoalsCheckList goalsData={goalsData} />
+    </AppWrapper>
+  );
 }
 
-export default App
+export default App;
