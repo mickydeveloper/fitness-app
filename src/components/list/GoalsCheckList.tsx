@@ -1,6 +1,6 @@
 import { Card } from "../common/Card";
 import { Goal } from "./types";
-import { GoalLine } from "./Goal";
+import { GoalLine } from "./Goal/Goal";
 
 function GoalsCheckList({ goalsData }: { goalsData: Array<Goal> }) {
   const renderGoals = () => {

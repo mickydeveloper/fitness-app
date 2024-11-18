@@ -5,4 +5,8 @@ export const AppWrapper = styled.main`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+
+  @media (max-width: 680px) {
+    grid-template-columns: 1fr;
+  }
 `;
